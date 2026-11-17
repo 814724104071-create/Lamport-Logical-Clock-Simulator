@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lamport Logical Clock Simulator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Lamport Logical Clock Simulator</h1>
+    <p>A simple simulation of event ordering in a distributed system</p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>Process Controls</h2>
+      <div class="controls">
+        <label>Process
+          <select id="process">
+            <option value="P1">Process P1</option>
+            <option value="P2">Process P2</option>
+            <option value="P3">Process P3</option>
+          </select>
+        </label>
+        <label>Event type
+          <select id="eventType">
+            <option value="Internal Event">Internal Event</option>
+            <option value="Send Message">Send Message</option>
+            <option value="Receive Message">Receive Message</option>
+          </select>
+        </label>
+        <label id="targetWrap" class="hidden">Message from / to
+          <select id="target">
+            <option value="P1">P1</option>
+            <option value="P2">P2</option>
+            <option value="P3">P3</option>
+          </select>
+        </label>
+        <button id="addEvent">Add Event</button>
+        <button id="reset" class="secondary">Reset</button>
+      </div>
+      <p class="hint">For a send event, select the destination process. For a receive event, select the sender process.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Logical Clock Values</h2>
+      <div class="clock-grid">
+        <div class="clock"><span>Process P1</span><strong id="clock-P1">0</strong></div>
+        <div class="clock"><span>Process P2</span><strong id="clock-P2">0</strong></div>
+        <div class="clock"><span>Process P3</span><strong id="clock-P3">0</strong></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Event Log</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>No.</th><th>Process</th><th>Event</th><th>Message</th><th>Clock</th></tr></thead>
+          <tbody id="eventLog"><tr><td colspan="5" class="empty">No events yet. Add an event to begin.</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>How it works</h2>
+      <ol>
+        <li>Each process maintains its own logical clock.</li>
+        <li>Before every event, the process increments its clock by 1.</li>
+        <li>When sending a message, the sender attaches its clock value.</li>
+        <li>When receiving a message, the receiver sets its clock to the maximum of its own clock and the received timestamp, then adds 1.</li>
+      </ol>
+    </section>
+  </main>
+  <footer>CS3551 – Distributed Computing | Mini Project</footer>
+  <script src="script.js"></script>
+</body>
+</html>
